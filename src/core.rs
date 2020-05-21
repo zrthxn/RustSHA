@@ -7,6 +7,18 @@
 //// 6. add transformed state table to init
 // 7. if no further blocks, digest by concat ascii repr of state registers
 
-pub fn block() {
+mod func;
+mod input;
 
+pub fn hash(message: String) {
+  let blocks = input::ascii(message);
+  println!("List ({:?}): {:?}", blocks.len(), blocks);
+
+  for block in blocks {
+    
+  }
+}
+
+fn schedule(block: Vec<u32>) -> Vec<u32> {
+  unimplemented!();
 }
