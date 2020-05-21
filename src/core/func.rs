@@ -1,3 +1,7 @@
+pub fn T1() {
+  unimplemented!();
+}
+
 pub fn mux(c: u32, y: u32, z: u32) -> u32 {
   // 2:1 Multiplexer
   !(
@@ -13,17 +17,18 @@ pub fn maj(a: u32, b: u32, c: u32) -> u32 {
 }
 
 pub fn rotr(x: u32, r: u8) -> u32 {
-  // Rotate right
-  let mut t: u32 = x>>r;
-  let mut d: u32 = x^(t<<r);
+  (x >> r) | (x << (32-r))
+  // // Rotate right
+  // let mut t: u32 = x>>r;
+  // let mut d: u32 = x^(t<<r);
 
-  d = d<<(32-r);
-  t += d;
+  // d = d<<(32-r);
+  // t += d;
 
-  return t;
+  // return t;
 }
 
-pub fn sg0(x: u32) -> u32 {
+pub fn sig0(x: u32) -> u32 {
   // sigma 0 function
   (
     rotr(x, 7) ^
@@ -32,7 +37,7 @@ pub fn sg0(x: u32) -> u32 {
   )
 }
 
-pub fn sg1(x: u32) -> u32 {
+pub fn sig1(x: u32) -> u32 {
   // sigma 1 function
   (
     rotr(x, 17) ^
@@ -41,7 +46,7 @@ pub fn sg1(x: u32) -> u32 {
   )
 }
 
-pub fn usg0(x: u32) -> u32 {
+pub fn usig0(x: u32) -> u32 {
   // Upper SIGMA 0 function
   (
     rotr(x, 2) ^
@@ -50,7 +55,7 @@ pub fn usg0(x: u32) -> u32 {
   )
 }
 
-pub fn usg1(x: u32) -> u32 {
+pub fn usig1(x: u32) -> u32 {
   // Upper SIGMA 1 function
   (
     rotr(x, 6) ^
