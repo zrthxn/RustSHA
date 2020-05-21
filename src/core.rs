@@ -78,7 +78,9 @@ pub fn hash(message: String) {
   }
 
   // Compression done
-  
+  for register in 0..8 {
+    println!("({}): {:x}", register, state[register]);
+  }
 }
 
 fn schedule(mut block: Vec<u32>) -> Vec<u32> {
@@ -94,8 +96,6 @@ fn schedule(mut block: Vec<u32>) -> Vec<u32> {
   }
   return block
 }
-
-fn shift_state()
 
 // @deprecated
 // Initialize const values
