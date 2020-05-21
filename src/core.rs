@@ -26,15 +26,59 @@ const K: [u32; 64] = [
 const H: [u32; 8] = [
   0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
 ];
+// a => 0
+// b => 1
+// c => 2
+// d => 3
+// e => 4
+// f => 5
+// g => 6
+// h => 7
 
 pub fn hash(message: String) {
   let blocks = input::ascii(message);
   println!("List ({:?}): {:?}", blocks.len(), blocks);
 
+  let mut state = H.clone();
+
   for mut block in blocks {
     block = schedule(block);
-    
+    let mut istate = state.clone();
+
+    for widx in 0..64 {
+      // Compression
+      let t1 = (
+        func::usig1(state[4]) as u64 + 
+        func::mux(state[4], state[5], state[6]) as u64 + 
+        state[7] as u64 +
+        block[widx] as u64 + 
+        K[widx] as u64
+      ) as u32;
+
+      let t2 = (
+        func::usig0(state[4]) as u64 + 
+        func::maj(state[0], state[1], state[2]) as u64
+      ) as u32;
+
+      state[7] = state[6];
+      state[6] = state[5];
+      state[5] = state[4];
+      state[4] = state[3];
+      state[3] = state[2];
+      state[2] = state[1];
+      state[1] = state[0];
+
+      state[0] = (t1 as u64 + t2 as u64) as u32;
+      state[4] = (t1 as u64 + state[4] as u64) as u32;
+    }
+
+    for register in 0..8 {
+      state[register] = (istate[register] as u64 + state[register] as u64) as u32;
+    }
   }
+
+  // Compression done
+  
 }
 
 fn schedule(mut block: Vec<u32>) -> Vec<u32> {
@@ -50,6 +94,8 @@ fn schedule(mut block: Vec<u32>) -> Vec<u32> {
   }
   return block
 }
+
+fn shift_state()
 
 // @deprecated
 // Initialize const values

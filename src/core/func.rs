@@ -1,7 +1,3 @@
-pub fn T1() {
-  unimplemented!();
-}
-
 pub fn mux(c: u32, y: u32, z: u32) -> u32 {
   // 2:1 Multiplexer
   !(
