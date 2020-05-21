@@ -14,14 +14,6 @@ pub fn maj(a: u32, b: u32, c: u32) -> u32 {
 
 pub fn rotr(x: u32, r: u8) -> u32 {
   (x >> r) | (x << (32-r))
-  // // Rotate right
-  // let mut t: u32 = x>>r;
-  // let mut d: u32 = x^(t<<r);
-
-  // d = d<<(32-r);
-  // t += d;
-
-  // return t;
 }
 
 pub fn sig0(x: u32) -> u32 {
