@@ -1,61 +1,51 @@
-pub fn ascii(msg: String) -> Vec<Vec<u32>> {
+const BLOCK_BYTES: usize = 64;
+const BLOCK_SIZE: usize = 16;
+const BLOCK_TEXT: usize = 14;
+
+pub fn ascii(string: String) -> Vec<Vec<u32>> {
+  let mut message = Vec::new();
+  for ch in string.chars() {
+    message.push(ch as u8);
+  }
+
+  message.push( 1<<7 as u8 );
+
+  let pad: usize = BLOCK_BYTES - ((message.len() + 8) % BLOCK_BYTES);
+
+  for _ in 0..pad {
+    message.push(0u8);
+  }
+  
+  let mut len_bytes: [u8; 8] =  [ 0,0,0,0,0,0,0,0 ];
+  for x in 0..8 {
+    len_bytes[ 7 - x ] = (
+      (string.len() * 8) / 
+      (1 << (8 * x))
+    ) as u8;
+  }
+  for y in 0..8 {
+    message.push( len_bytes[y] )
+  }
+
   let mut list = Vec::new();
   let mut block = Vec::new();
   let mut word: u32 = 0;
-  let mut byte = 0;
 
-  for ch in msg.chars() {
-    word = (word<<8) + (ch as u32);
-    byte += 1;
+  for (mut count, byte) in message.iter().enumerate() {
+    word = (word << 8) + (*byte as u32);
+    count += 1;
+    
+    if count % 4 == 0 {
+      block.push(word);
+      word = 0u32;
 
-    if byte < msg.len() {
-      if byte % 4 == 0 {
-        block.push(word);
-        word = 0u32;
-
-        if block.len() == 16 {
-          list.push(block);
-          block = Vec::new();
-        }
+      if block.len() == BLOCK_SIZE {
+        list.push(block);
+        block = Vec::new();
       }
     }
   }
 
-  if byte % 4 != 0 {
-    // pad current word if incomplete
-    word = word << 1;
-    word += 1u32;
-
-    word = word << ((8 * (4 - byte)) - 1);
-
-    if block.len() == (16 - 1) {
-      // put length in last byte if last of block
-      word += (((byte - 1) % 64) * 8) as u32;
-    } 
-  }
-
-  block.push(word);
-
-  if block.len() < 16 {
-    let mut lword: u32 = 0u32;
-    if byte % 4 == 0 {
-      lword = 1u32<<(32-1);
-    }
-
-    if block.len() < 15 {
-      block.push(lword);
-      for _ in block.len()..15 {
-        block.push(0u32);
-      }
-
-      block.push(((byte % 64) * 8) as u32);
-    } else {
-      lword += ((byte % 64) * 8) as u32;
-      block.push(lword);
-    }
-  }
-  
-  list.push(block);
   return list;
 }
 

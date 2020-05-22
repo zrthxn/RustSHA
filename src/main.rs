@@ -6,9 +6,5 @@
 mod core;
 
 fn main() {
-  core::hash("gobbledygook".to_string());
-  
-  // bug: input module
-  // inputs longer than 64 bytes arent encoded properly
-  // core::hash("gobbledygookgobbledygookgobbledygookgobbledygookgobbledygookgobbledygookgobbledygookgobbledygookgobbledygook".to_string());
+  core::hash("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890+/".to_string());
 }
