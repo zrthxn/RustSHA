@@ -35,22 +35,8 @@ const H: [u32; 8] = [
 // g => 6
 // h => 7
 
-// pub fn hash(message: String) {
-//   let blocks = input::ascii(message);
-//   for mut block in blocks {
-//     block = schedule(block);
-
-//     for idx in 0..64 {
-//       println!("({}): {:b}", idx, block[idx] as u32);
-//     }
-//   }
-//   // println!("MUX: {}", func::mux(0, 1, 0));
-// }
-
 pub fn hash(message: String) {
   let blocks = input::ascii(message);
-  // println!("List ({:?}): {:?}", blocks.len(), blocks);
-
   let mut state = H.clone();
 
   for mut block in blocks {
