@@ -7,4 +7,4 @@ actually works?!
 
 ### Usage
 You're probably better off using an in-built crypto library. But if you do use this, please don't blame me
-if Russian hackers steal your data.
+if Russian hackers steal your data. Input size is limited to **INT64_MAX bits**.
