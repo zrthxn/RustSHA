@@ -77,7 +77,8 @@ pub fn hash(message: String) {
 
   // Compression done
   for register in 0..8 {
-    println!("({}): {:x}", register, state[register]);
+    // println!("({}): {:x}", register, state[register]);
+    print!("{:x}", state[register]);
   }
 }
 
