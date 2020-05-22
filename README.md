@@ -1,6 +1,6 @@
 # RustSHA
-This is a noob implementation of the SHA256 algorithm in Rust. Why? Because I can. And it gives me a chance
-to feel ***hackerboi.*** (and ofc its a learning experience).
+This is a noob implementation of SHA256 in Rust. Why? Because I can. A chance
+to feel ***hackerboi.*** (and ofc a learning experience).
 
 ***Zero Dependencies***
 
